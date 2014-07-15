@@ -14,7 +14,7 @@ import com.lw.entity.OrderInfo;
 
 public class OrderDao {
 	private Connection mConnection;
-	private static final String insert = "insert into points_order_info (device_id,order_id,status,message,point,time,server_time) value (?,?,?,?,?,?,now())";
+	private static final String insert = "insert into points_order_info (device_id,order_id,status,message,point,time,totalPoint,server_time) value (?,?,?,?,?,?,?,now())";
 	
 	public void addOrderInfo(List<OrderInfo> list){
 		try{
@@ -33,6 +33,7 @@ public class OrderDao {
 //				ps.setDate(6, date);
 //				ps.setString(6, d.toLocaleString());
 				ps.setTimestamp(6, new Timestamp(order.getTime()));
+				ps.setInt(7, order.getTotalPoint());
 				ps.execute();
 			}
 		}catch (Exception e) {

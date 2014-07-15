@@ -54,7 +54,8 @@ public class DealDao {
 			for(int i=0;i<payId.length;i++){
 				PreparedStatement ps = connection.prepareStatement(UPDATA);
 				ps.setInt(1, payId[i]);
-				ps.executeUpdate();
+				int count = ps.executeUpdate();
+				System.out.println(count);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

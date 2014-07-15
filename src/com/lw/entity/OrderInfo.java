@@ -8,6 +8,15 @@ public class OrderInfo {
 	private String message;
 	private int point;
 	private long time;
+	private int totalPoint;
+
+	public int getTotalPoint() {
+		return totalPoint;
+	}
+
+	public void setTotalPoint(int totalPoint) {
+		this.totalPoint = totalPoint;
+	}
 
 	public int getDeviceId() {
 		return deviceId;

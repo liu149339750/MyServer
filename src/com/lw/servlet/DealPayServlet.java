@@ -1,6 +1,7 @@
 package com.lw.servlet;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,12 @@ public class DealPayServlet extends HttpServlet{
 				id = Integer.valueOf(cid);
 			System.out.println("DealPayServlet device_id = " + id);
 			List<PayDealMessage> data = deal.getDealMessage(id);
-			if(data.size() == 0 )
+			OutputStream out = resp.getOutputStream();
+			if(data.size() == 0 ){
+				out.write(0);
+				out.close();
 				return;
+			}
 			List<String> messages = new ArrayList<String>();
 			int payIds[] = new int[data.size()];
 			for(int i =0;i<data.size();i++){
@@ -45,7 +50,11 @@ public class DealPayServlet extends HttpServlet{
 			}
 			Type type = new TypeToken<List<String>>(){}.getType();
 			Gson gson = new Gson();
-			resp.setHeader("exchangeMessage", gson.toJson(messages, type));
+			String json = gson.toJson(messages, type);
+			System.out.println("message = " + json);
+			out.write(1);
+			out.write(json.getBytes("utf-8"));
+			out.close();
 			deal.updataDealStatus(payIds);
 		}
 		System.out.println("DealPayServlet end");
