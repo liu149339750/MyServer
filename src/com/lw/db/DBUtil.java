@@ -39,14 +39,15 @@ public class DBUtil {
 			+ "time datetime DEFAULT NULL,"
 			+ "local_phone varchar(255) DEFAULT NULL,"
 			+ "uuid varchar(255) DEFAULT NULL,"
-			+ "message varchar(255) DEFAULT NULL," + "PRIMARY KEY (Id))";
+			+ "message varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL," + "PRIMARY KEY (Id))";
 
 	private static final String CREATE_ORDER_INFO = "CREATE TABLE IF NOT EXISTS points_order_info ("
 			+ "Id int(11) NOT NULL AUTO_INCREMENT,"
 			+ "device_id int(11) DEFAULT NULL,"
+			+ "cid int(11) DEFAULT 0," 
 			+ "order_id varchar(255) DEFAULT '' COMMENT '获取订单号(具有唯一性)',"
 			+ "status int(11) DEFAULT NULL COMMENT '获取积分订单的状态：1. 表示开发者获得了收入并且用户获得了积分。 2. 表示开发者没有获得收入但用户获得了积分（未通过审核以及测试模式下结算无效等情况）。',"
-			+ "message varchar(255) DEFAULT '' COMMENT '本次获取积分的描述语，如“成功安装《--》获取了100金币”',"
+			+ "message varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT '' COMMENT '本次获取积分的描述语，如“成功安装《--》获取了100金币”',"
 			+ "point int(11) DEFAULT NULL COMMENT '本次获得的积分',"
 			+ "time datetime DEFAULT NULL COMMENT '本次获得积分的结算时间',"
 			+ "server_time datetime DEFAULT NULL COMMENT '服务器时间',"
@@ -74,6 +75,15 @@ public class DBUtil {
 			td.set(getLocalConn());
 			conn = td.get();
 		} else {
+			try {
+				if(conn.isClosed()){
+					td.set(getLocalConn());
+					conn = td.get();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return conn;
 		}
 
@@ -86,8 +96,7 @@ public class DBUtil {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
-//			con = DriverManager
-//					.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
+//			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
 			// DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =

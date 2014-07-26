@@ -25,7 +25,7 @@ public class Test {
 		OrderInfo order = new OrderInfo();
 		order.setDeviceId(12);
 		order.setMessage("my name is liuwei");
-		order.setOrderId("32");
+		order.setOrderId(32);
 		order.setPoint(342);
 		order.setStatus(1);
 		order.setTime(System.currentTimeMillis());

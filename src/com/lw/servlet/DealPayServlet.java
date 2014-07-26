@@ -29,8 +29,10 @@ public class DealPayServlet extends HttpServlet{
 		if("admin".equals(user)){
 			
 		}else {
-			String cid = req.getHeader("device_id"); //http.setRequestProperty
-//			String cid = req.getParameter("device_id");
+			String cid = null;
+			cid = req.getHeader("device_id"); //http.setRequestProperty
+			if(Util.isEmpty(cid))
+				cid = req.getParameter("device_id");
 			int id = -1;
 			if(!Util.isEmpty(cid))
 				id = Integer.valueOf(cid);

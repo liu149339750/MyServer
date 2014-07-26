@@ -1,14 +1,25 @@
 package com.lw.entity;
-
+/**a order info entity to send to the server*/
 public class OrderInfo {
 
 	private int deviceId;
-	private String orderId;
+	private int orderId;
 	private int status;
 	private String message;
 	private int point;
 	private long time;
 	private int totalPoint;
+	private int id;
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getTotalPoint() {
 		return totalPoint;
@@ -17,7 +28,6 @@ public class OrderInfo {
 	public void setTotalPoint(int totalPoint) {
 		this.totalPoint = totalPoint;
 	}
-
 	public int getDeviceId() {
 		return deviceId;
 	}
@@ -26,11 +36,11 @@ public class OrderInfo {
 		this.deviceId = deviceId;
 	}
 
-	public String getOrderId() {
+	public int getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(String orderId) {
+	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
 
