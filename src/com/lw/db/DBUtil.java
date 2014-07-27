@@ -39,7 +39,8 @@ public class DBUtil {
 			+ "time datetime DEFAULT NULL,"
 			+ "local_phone varchar(255) DEFAULT NULL,"
 			+ "uuid varchar(255) DEFAULT NULL,"
-			+ "message varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL," + "PRIMARY KEY (Id))";
+			+ "message varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,"
+			+ "deal int(11) DEFAULT 0 ," + "PRIMARY KEY (Id))";
 
 	private static final String CREATE_ORDER_INFO = "CREATE TABLE IF NOT EXISTS points_order_info ("
 			+ "Id int(11) NOT NULL AUTO_INCREMENT,"

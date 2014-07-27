@@ -12,9 +12,22 @@ public class ExchangeEntity {
 	private String uuid;
 	private String message;
 	
+	private String time;
+	private int pay_id;
 	
 	
-	
+	public int getPay_id() {
+		return pay_id;
+	}
+	public void setPay_id(int payId) {
+		pay_id = payId;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public String getLocalPhoneNumber() {
 		return localPhoneNumber;
 	}

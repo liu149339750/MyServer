@@ -9,10 +9,20 @@ public class OrderInfo {
 	private int point;
 	private long time;
 	private int totalPoint;
-	private int id;
+	private int id; //for the user.it's the client id.for admin,this is the server cid.
+	
+	private String stime;
 	
 	
 	
+	public String getStime() {
+		return stime;
+	}
+
+	public void setStime(String stime) {
+		this.stime = stime;
+	}
+
 	public int getId() {
 		return id;
 	}

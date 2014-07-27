@@ -43,4 +43,13 @@
 		<servlet-name>deal</servlet-name>
 		<url-pattern>/deal</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>admin</servlet-name>
+		<servlet-class>com.lw.servlet.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>admin</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
 </web-app>
