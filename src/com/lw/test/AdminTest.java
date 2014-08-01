@@ -28,7 +28,7 @@ public class AdminTest {
 	 */
 	public static void main(String[] args) throws IOException {
 		AdminRequest ar = new AdminRequest();
-		URL url  = new URL("http://192.168.1.109:8080/MyServer/admin");
+		URL url  = new URL("http://sunsonfly.synology.me:7070/zuanqian/admin");
 		HttpURLConnection http =  (HttpURLConnection) url.openConnection();
 		http.setDoOutput(true);
 //		testOrderInfo(ar,http);
@@ -36,6 +36,11 @@ public class AdminTest {
 //		testPay(ar, http);
 //		testdeal(ar, http);
 		
+		testCheat(ar, http);
+	}
+
+	private static void testCheat(AdminRequest ar, HttpURLConnection http)
+			throws IOException, UnsupportedEncodingException {
 		ar.setFlag(AdminRequest.FLAG_QUERY_IS_CHEAT);
 		ar.setDevice_id(612);
 		Gson gson = new Gson();

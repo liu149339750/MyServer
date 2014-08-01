@@ -40,6 +40,8 @@ public class DBUtil {
 			+ "local_phone varchar(255) DEFAULT NULL,"
 			+ "uuid varchar(255) DEFAULT NULL,"
 			+ "message varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,"
+			+ "type varchar(100),"
+			+ "version varchar(100),"
 			+ "deal int(11) DEFAULT 0 ," + "PRIMARY KEY (Id))";
 
 	private static final String CREATE_ORDER_INFO = "CREATE TABLE IF NOT EXISTS points_order_info ("
@@ -96,7 +98,9 @@ public class DBUtil {
 		Connection con = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/zuanqianbao?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+			 
+//			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 //			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
 			// DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");

@@ -1,4 +1,4 @@
-package com.lw.util;
+package com.lw.test;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -14,8 +14,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.lw.entity.OrderInfo;
 
-public class Test {
-	private static final String ORDER = "http://10.0.11.152:8080/MyServer/order";
+public class OrderTest {
+	private static final String ORDER = "http://sunsonfly.synology.me:7070/zuanqian/order";
 	/**
 	 * @param args
 	 * @throws IOException 
