@@ -7,15 +7,29 @@ public class ExchangeEntity {
 	private String number;
 	private int totalPoints;
 	private String money;
+	private String version;
 	
 	private String localPhoneNumber;
 	private String uuid;
 	private String message;
+	private int type;
 	
 	private String time;
 	private int pay_id;
 	
 	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 	public int getPay_id() {
 		return pay_id;
 	}
