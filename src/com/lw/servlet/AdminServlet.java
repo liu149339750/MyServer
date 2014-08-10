@@ -58,10 +58,13 @@ public class AdminServlet extends HttpServlet{
 			List<ExchangeEntity> data = dao.getUnPayExchange();
 			json = gson.toJson(data);
 			break;
+		case AdminRequest.FLAG_DEAL:
+			dao.dealPay(ar);
+			break;
 		default:
 			break;
 		}
-		System.out.println(json);
+		System.out.println("admin deal! json = " + json);
 		if(!Util.isEmpty(json)){
 			OutputStream out = resp.getOutputStream();
 			out.write(json.getBytes("utf-8"));

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.Timestamp;
 
 import com.lw.db.DBUtil;
@@ -105,11 +104,16 @@ public class DeviceDao {
 				PreparedStatement ps = mConnection.prepareStatement(queryByMac);
 				ps.setString(1, mac);
 				ResultSet rs = ps.executeQuery();
-				if(rs.first()){
+//				if(rs.first()){
+//					id = rs.getInt(1);
+//					if(!rs.next())
+//						return id;
+//				}
+				if(rs.last()){
 					id = rs.getInt(1);
-					if(!rs.next())
-						return id;
+					return id;
 				}
+					
 			}
 			String uuid = device.getUuid();
 			String imei = device.getImei();

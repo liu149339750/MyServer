@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lw.dao.DealDao;
+import com.lw.dao.RecommandDao;
 import com.lw.dao.DealDao.PayDealMessage;
 import com.lw.dao.DeviceDao;
 import com.lw.entity.Device;
@@ -46,6 +47,7 @@ public class LoginServlet extends HttpServlet{
 //			dd.updataFirstLogin(id);
 //			resultId = id;
 			resultId = dd.addDevice(device, id);
+			updataRecommand(id,resultId);
 		}else if (cid != id){   //数据被串改或者数据库出问题
 			System.out.println("error!数据被串改或者数据库出问题 ,cid = " + cid + ",id = " + id +"\n"+device);
 			if(id == 0)
@@ -73,5 +75,10 @@ public class LoginServlet extends HttpServlet{
 		Type type = new TypeToken<List<String>>(){}.getType();
 		resp.setHeader("exchangeMessage", gson.toJson(messages, type));
 		deal.updataDealStatus(payIds);
+	}
+
+	private void updataRecommand(int oldId, int newId) {
+		RecommandDao rd = new RecommandDao();
+		rd.updataRelation(oldId, newId);
 	}
 }

@@ -56,6 +56,15 @@ public class DBUtil {
 			+ "server_time datetime DEFAULT NULL COMMENT '服务器时间',"
 			+ "totalPoint int(11) DEFAULT 0,"
 			+ "PRIMARY KEY (Id)) ";
+	
+	private static final String CREATE_RECOMMAND = "CREATE TABLE IF NOT EXISTS recommand ("
+		+ "Id int(11) NOT NULL primary key AUTO_INCREMENT,"
+		+ "device_id int(11) DEFAULT NULL,"
+		+ "recommand_id int(11)," 
+		+ "point int(11),"
+		+ "time datetime,"
+		+ "device varchar(100))"; //the model and os version
+	
 
 	static {
 		Connection con = getLocalConn();
@@ -66,6 +75,7 @@ public class DBUtil {
 			con.prepareStatement(CREATE_DEVICE).executeUpdate();
 			con.prepareStatement(CREATE_PAY).executeUpdate();
 			con.prepareStatement(CREATE_ORDER_INFO).execute();
+			con.prepareStatement(CREATE_RECOMMAND).execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,9 +108,9 @@ public class DBUtil {
 		Connection con = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/zuanqianbao?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+//			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/zuanqianbao?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			 
-//			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 //			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
 			// DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");

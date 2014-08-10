@@ -26,6 +26,9 @@ public class AdminDao {
 	private final String GET_SPEND_POINTS = "select sum(spend_point) from pay where device_id = ?";
 	private final String GET_TOTAL_POINTS = "select point from device where id = ?";
 	
+	private final String UPDATA_PAY_DEAL = "update pay set deal = 1 where device_id = ? and id = ?";
+	private final String INSERT_FEEDBACK = "insert into deal set time = now(),message = ?,device_id=?,pay_id=? ";
+	
 	public List<ExchangeEntity> getUnPayExchange(){
 		Connection connection = DBUtil.getConn();
 		List<ExchangeEntity> data = new ArrayList<ExchangeEntity>();
@@ -35,7 +38,7 @@ public class AdminDao {
 			while(rs.next()){
 				ExchangeEntity ee = new ExchangeEntity();
 				ee.setDeviceId(rs.getInt(2));
-				ee.setPay_id(1);
+				ee.setPay_id(rs.getInt(1));
 				ee.setSpendPoint(rs.getInt(3));
 				ee.setNumber(rs.getString(4));
 				ee.setTotalPoints(rs.getInt(5));
@@ -155,5 +158,24 @@ public class AdminDao {
 		}
 		
 		return ce;
+	}
+	
+	public void dealPay(AdminRequest ar){
+		Connection con = DBUtil.getConn();
+		try {
+			PreparedStatement ps = con.prepareStatement(UPDATA_PAY_DEAL);
+			ps.setInt(1, ar.getDevice_id());
+			ps.setInt(2, ar.getPay_id());
+			ps.executeUpdate();
+			
+			ps = con.prepareStatement(INSERT_FEEDBACK);
+			ps.setString(1, ar.getMessage());
+			ps.setInt(2, ar.getDevice_id());
+			ps.setInt(3, ar.getPay_id());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
