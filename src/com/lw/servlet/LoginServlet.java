@@ -18,6 +18,8 @@ import com.lw.dao.RecommandDao;
 import com.lw.dao.DealDao.PayDealMessage;
 import com.lw.dao.DeviceDao;
 import com.lw.entity.Device;
+import com.lw.util.DataLifeManager;
+import com.lw.util.DataLifeManager.DownloadInfo;
 import com.lw.util.Util;
 
 public class LoginServlet extends HttpServlet{
@@ -30,7 +32,7 @@ public class LoginServlet extends HttpServlet{
 		String json = Util.readStream(in);
 		Gson gson = new Gson();
 		Device device = gson.fromJson(json, Device.class);
-		System.out.println(Util.getFormmaterTime() +  "     device = " + json);
+		System.out.println(Util.getFormmaterTime() +  " login !    device = " + json);
 		in.close();
 		if(device == null || device.isEmpty()){
 			System.out.println("device == null,return!");
@@ -41,13 +43,20 @@ public class LoginServlet extends HttpServlet{
 		int cid = device.getId();
 		int id = dd.getDeviceId(device);
 		System.out.println("login cid = " + cid + ",id = " + id);
-		if(id <=0 && cid <= 0)  //第一次登陆
+		if(id <=0 && cid <= 0){  //第一次登陆
 			resultId = dd.addDevice(device);
-		else if(cid <= 0){     //之前安装过
+			String host = req.getRemoteAddr();
+			int rid = DataLifeManager.getInstance().isRecommand(host);
+			System.out.println("rid = " + rid);
+			if(rid != -1){
+				RecommandDao rd = new RecommandDao();
+				rd.addRelation(device.getDevice(), rid, resultId);
+			}
+		}else if(cid <= 0){     //之前安装过
 //			dd.updataFirstLogin(id);
 //			resultId = id;
 			resultId = dd.addDevice(device, id);
-			updataRecommand(id,resultId);
+//			updataRecommand(id,resultId); //修改推荐关系
 		}else if (cid != id){   //数据被串改或者数据库出问题
 			System.out.println("error!数据被串改或者数据库出问题 ,cid = " + cid + ",id = " + id +"\n"+device);
 			if(id == 0)

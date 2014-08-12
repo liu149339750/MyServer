@@ -61,8 +61,8 @@ public class DBUtil {
 		+ "Id int(11) NOT NULL primary key AUTO_INCREMENT,"
 		+ "device_id int(11) DEFAULT NULL,"
 		+ "recommand_id int(11)," 
-		+ "point int(11),"
-		+ "time datetime,"
+		+ "point int(11) default 0,"
+		+ "time datetime ,"
 		+ "device varchar(100))"; //the model and os version
 	
 
@@ -110,8 +110,8 @@ public class DBUtil {
 			Class.forName("org.mariadb.jdbc.Driver");
 //			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/zuanqianbao?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			 
-			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
-//			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
+//			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
 			// DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =

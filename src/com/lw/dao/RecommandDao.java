@@ -14,8 +14,9 @@ public class RecommandDao {
 
 	private final String GET_RECOMMAND_DEVICE = "select recommand_id,point,device from recommand where device_id = ?";
 	private final String SPEND_POINT = "updata recommand set point = 0,time = now() where recommand_id = ?";
-	private final String UPDATA_DEVICEID_RELATION = "updata recommand set device_id = ? where device_id = ?";
-	private final String UPDATA_RECOMMANDID_RELATION = "updata recommand set recommand_id = ? where recommand_id = ?";
+	private final String UPDATA_DEVICEID_RELATION = "update recommand set device_id = ? where device_id = ?";
+	private final String UPDATA_RECOMMANDID_RELATION = "update recommand set recommand_id = ? where recommand_id = ?";
+	private final String INSERT_RELATION = "insert into recommand set time=now(),device_id = ? ,recommand_id = ?,device = ?";
 	
 	public List<RecommandDeviceEntity> getRecommandDevice(int deviceId){
 		Connection connection = DBUtil.getConn();
@@ -48,7 +49,7 @@ public class RecommandDao {
 		return data;
 	}
 	
-	public boolean PickPoint(int recommandId){
+	public boolean PickPoint(int recommandId){ //the id which is recommanded
 		Connection con = DBUtil.getConn();
 		
 		try {
@@ -86,5 +87,22 @@ public class RecommandDao {
 			DBUtil.close();
 		}
 		
+	}
+	
+	public void addRelation(String device,int rid,int newId){ //rid = the recommand device Id,newId = the recommanded device id.
+		Connection con = DBUtil.getConn();
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(INSERT_RELATION);
+			ps.setInt(1, rid);
+			ps.setInt(2, newId);
+			ps.setString(3, device);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+				
 	}
 }

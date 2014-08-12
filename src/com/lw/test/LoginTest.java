@@ -21,11 +21,12 @@ public class LoginTest {
 		Device device = new Device();
 		device.setAndroid_id("test");
 		device.setDevice("HTI928");
-		device.setMac("sdasdasdas");
-		device.setMac("dsadsadas");
+		device.setImei("sadasdsa11");
+		device.setMac("sdasdasdassdsd");
 		Gson gson = new Gson();
 		
-		URL url  = new URL("http://sunsonfly.synology.me:7070/zuanqian/login");
+//		URL url  = new URL("http://sunsonfly.synology.me:7070/zuanqian/login");
+		URL url  = new URL("http://localhost:8080/MyServer/login");
 		HttpURLConnection http =  (HttpURLConnection) url.openConnection();
 		http.setDoOutput(true);
 		OutputStream out = http.getOutputStream();
