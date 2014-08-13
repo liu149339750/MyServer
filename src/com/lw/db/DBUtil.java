@@ -111,9 +111,9 @@ public class DBUtil {
 //			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/zuanqianbao?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			 
 //			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
-			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
-			// con =
-			// DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+//			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
+			 con =
+			 DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
 			// DriverManager.getConnection("jdbc:mysql://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =

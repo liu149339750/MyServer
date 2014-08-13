@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.lw.dao.AdminDao;
 import com.lw.entity.AdminRequest;
 import com.lw.entity.CheatEntity;
+import com.lw.entity.CoastEntity;
 import com.lw.entity.DealEntity;
 import com.lw.entity.ExchangeEntity;
 import com.lw.entity.OrderInfo;
@@ -60,6 +61,15 @@ public class AdminServlet extends HttpServlet{
 			break;
 		case AdminRequest.FLAG_DEAL:
 			dao.dealPay(ar);
+			break;
+		case AdminRequest.FLAG_QUERY_COSAT:
+//			int days = Integer.parseInt(req.getParameter("days"));
+			int days = Integer.parseInt(req.getHeader("days"));
+			int coast = dao.getCoast(days);
+			CoastEntity coastEntity = new CoastEntity();
+			coastEntity.setMoney(coast);
+			coastEntity.setDays(days);
+			json = gson.toJson(coastEntity);
 			break;
 		default:
 			break;

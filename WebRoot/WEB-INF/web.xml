@@ -60,4 +60,13 @@
 		<servlet-name>request</servlet-name>
 		<url-pattern>/request</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>rank</servlet-name>
+		<servlet-class>com.lw.servlet.RankingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>rank</servlet-name>
+		<url-pattern>/rank</url-pattern>
+	</servlet-mapping>
 </web-app>

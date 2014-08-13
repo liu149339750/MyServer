@@ -1,10 +1,13 @@
 package com.lw.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.lw.db.DBUtil;
@@ -28,6 +31,8 @@ public class AdminDao {
 	
 	private final String UPDATA_PAY_DEAL = "update pay set deal = 1 where device_id = ? and id = ?";
 	private final String INSERT_FEEDBACK = "insert into deal set time = now(),message = ?,device_id=?,pay_id=? ";
+	
+	private final String GET_COAST = "select sum(money) from pay where time > ?";
 	
 	public List<ExchangeEntity> getUnPayExchange(){
 		Connection connection = DBUtil.getConn();
@@ -177,5 +182,30 @@ public class AdminDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int getCoast(int days){
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		
+		Connection con = DBUtil.getConn();
+		Date date = new Date(year - 1900, month, day - days);
+//		Timestamp timestamp = new Timestamp(year - 1900, month, day - days, 0, 0, 0, 0);
+//		System.out.println(date);
+//		System.out.println(timestamp);
+		try {
+			PreparedStatement ps = con.prepareStatement(GET_COAST);
+			ps.setDate(1, date);
+//			ps.setTimestamp(1, timestamp);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

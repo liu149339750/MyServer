@@ -10,14 +10,13 @@ public class AdminRequest {
 	public static final int FLAG_QUERY_IS_CHEAT = 5;
 	public static final int FLAG_DEAL          = 6;
 	
+	public static final int FLAG_QUERY_COSAT = 7;
+	
 	private int flag;
 	private int device_id;
 	private String number ;
 	private int pay_id;
 	private String message;
-	
-	
-	
 	
 	public String getMessage() {
 		return message;

@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet{
 			String host = req.getRemoteAddr();
 			int rid = DataLifeManager.getInstance().isRecommand(host);
 			System.out.println("rid = " + rid);
-			if(rid != -1){
+			if(rid != -1 && !Util.isEmpty(device.getImei())){
 				RecommandDao rd = new RecommandDao();
 				rd.addRelation(device.getDevice(), rid, resultId);
 			}
