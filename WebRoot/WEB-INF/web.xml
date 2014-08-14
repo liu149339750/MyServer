@@ -61,12 +61,21 @@
 		<url-pattern>/request</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>rank</servlet-name>
 		<servlet-class>com.lw.servlet.RankingServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>rank</servlet-name>
 		<url-pattern>/rank</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>querypay</servlet-name>
+		<servlet-class>com.lw.servlet.QueryPayServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>querypay</servlet-name>
+		<url-pattern>/querypay</url-pattern>
 	</servlet-mapping>
 </web-app>
