@@ -109,6 +109,7 @@ public class QueryPayServlet extends HttpServlet{
 				entity.setTime(rs.getString(3));
 				entity.setDeal(rs.getInt(4));
 				entity.setVersion(rs.getString(5));
+				entity.setDeviceId(deviceId);
 				result.add(entity);
 			}
 		} catch (SQLException e) {
