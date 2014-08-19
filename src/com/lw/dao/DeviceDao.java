@@ -100,7 +100,7 @@ public class DeviceDao {
 		int id = 0;
 		try{
 			mConnection = DBUtil.getConn();
-			if(!Util.isEmpty(mac)){
+			if(!Util.isEmpty(mac) && !"00:00:00:00:00:00".equals(mac)){
 				PreparedStatement ps = mConnection.prepareStatement(queryByMac);
 				ps.setString(1, mac);
 				ResultSet rs = ps.executeQuery();

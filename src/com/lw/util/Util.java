@@ -30,4 +30,13 @@ public class Util {
 		}
 		return sb.toString();
 	}
+	
+	public static void sendErrorEmail(Exception e,String title){
+		StackTraceElement st[] = e.getStackTrace();
+		String message = e.toString();
+		for(int i = 0;i<st.length;i++){
+			message = message + "\n" + st[i];
+		}
+		EmailSend.sendEmail(title, message);
+	}
 }

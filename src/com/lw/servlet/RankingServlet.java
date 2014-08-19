@@ -29,6 +29,6 @@ public class RankingServlet extends HttpServlet{
 		out.write(json.getBytes("utf-8"));
 		out.close();
 		
-		System.out.println("rank json = " + json);
+//		System.out.println("rank json = " + json);
 	}
 }

@@ -19,7 +19,6 @@ import com.lw.dao.DealDao.PayDealMessage;
 import com.lw.dao.DeviceDao;
 import com.lw.entity.Device;
 import com.lw.util.DataLifeManager;
-import com.lw.util.DataLifeManager.DownloadInfo;
 import com.lw.util.Util;
 
 public class LoginServlet extends HttpServlet{
@@ -42,7 +41,7 @@ public class LoginServlet extends HttpServlet{
 		DeviceDao dd = new DeviceDao();
 		int cid = device.getId();
 		int id = dd.getDeviceId(device);
-		System.out.println("login cid = " + cid + ",id = " + id);
+		System.out.println("login cid = " + cid + ",id = " + id + ", point = " + device.getPoint());
 		if(id <=0 && cid <= 0){  //µÚÒ»´ÎµÇÂ½
 			resultId = dd.addDevice(device);
 			String host = req.getRemoteAddr();

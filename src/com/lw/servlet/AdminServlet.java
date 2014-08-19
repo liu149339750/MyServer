@@ -60,6 +60,7 @@ public class AdminServlet extends HttpServlet{
 			json = gson.toJson(data);
 			break;
 		case AdminRequest.FLAG_DEAL:
+			System.out.println("deal zuanqian = " + ar.getNumber());
 			dao.dealPay(ar);
 			break;
 		case AdminRequest.FLAG_QUERY_COSAT:
