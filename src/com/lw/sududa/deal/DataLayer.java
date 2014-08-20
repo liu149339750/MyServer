@@ -115,7 +115,7 @@ public class DataLayer extends SududaRequest{
 	
 	public static ChargeResutEntity getStatus(String orderId) throws MalformedURLException, UnsupportedEncodingException, IOException{
 		String json = getStatusResult(orderId);
-		System.out.println(json);
+		System.out.println(json + "orderId = " + orderId);
 		JsonParser jp = new JsonParser();
 		ChargeResutEntity cr = jp.getChargeEntity(json);
 		return cr;

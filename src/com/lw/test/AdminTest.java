@@ -41,7 +41,37 @@ public class AdminTest {
 		
 //		testCheat(ar, http);
 		
-		testCoastQuery(ar, http);
+//		testCoastQuery(ar, http);
+//		testDeal(ar, http);
+		testChargeNumber(ar, http);
+	}
+
+	private static void testChargeNumber(AdminRequest ar, HttpURLConnection http)
+			throws IOException, UnsupportedEncodingException {
+		ar.setFlag(AdminRequest.FLAG_CHARGE_NUMBER);
+		ar.setDevice_id(111);
+		ar.setPay_id(107);
+		OutputStream out = http.getOutputStream();
+		Gson gson = new Gson();
+		String json = gson.toJson(ar);
+		out.write(json.getBytes("utf-8"));
+		out.close();
+		http.getResponseCode();
+		System.out.println(json);
+		System.out.println("send over");
+	}
+
+	private static void testDeal(AdminRequest ar, HttpURLConnection http)
+			throws IOException, UnsupportedEncodingException {
+		ar.setFlag(AdminRequest.FLAG_DEAL_UNPAY_PHONE);
+		OutputStream out = http.getOutputStream();
+		Gson gson = new Gson();
+		String json = gson.toJson(ar);
+		out.write(json.getBytes("utf-8"));
+		out.close();
+		http.getResponseCode();
+		System.out.println(json);
+		System.out.println("send over");
 	}
 
 	private static void testCoastQuery(AdminRequest ar, HttpURLConnection http)

@@ -13,6 +13,7 @@ public class AdminRequest {
 	public static final int FLAG_QUERY_COSAT = 7;
 	
 	public static final int FLAG_DEAL_UNPAY_PHONE = 8;
+	public static final int FLAG_CHARGE_NUMBER = 9;
 	
 	private int flag;
 	private int device_id;

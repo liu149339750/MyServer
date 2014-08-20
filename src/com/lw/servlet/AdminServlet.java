@@ -19,6 +19,7 @@ import com.lw.entity.CoastEntity;
 import com.lw.entity.DealEntity;
 import com.lw.entity.ExchangeEntity;
 import com.lw.entity.OrderInfo;
+import com.lw.util.ChargeManager;
 import com.lw.util.Util;
 
 public class AdminServlet extends HttpServlet{
@@ -26,7 +27,7 @@ public class AdminServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+		System.out.println("AdminServlet");
 		InputStream in = req.getInputStream();
 		InputStreamReader ir = new InputStreamReader(in, "utf-8");
 		Gson gson = new Gson();
@@ -34,7 +35,6 @@ public class AdminServlet extends HttpServlet{
 		ir.close();
 		if(ar == null)
 			return;
-		
 		AdminDao dao = new AdminDao();
 		String json  = null;
 		switch (ar.getFlag()) {
@@ -73,7 +73,11 @@ public class AdminServlet extends HttpServlet{
 			break;
 		case AdminRequest.FLAG_DEAL_UNPAY_PHONE:
 			List<ExchangeEntity> phones = dao.getUnDealPhone();
-			chagerPhones(phones);
+			ChargeManager.getInstance().chargePhones(phones);
+			break;
+		case AdminRequest.FLAG_CHARGE_NUMBER:
+			ExchangeEntity ee = dao.getExchangeEntity(ar);
+			ChargeManager.getInstance().chargeNumber(ee);
 			break;
 		default:
 			break;
@@ -87,8 +91,6 @@ public class AdminServlet extends HttpServlet{
 		}
 	}
 
-	private void chagerPhones(List<ExchangeEntity> phones) {
-		
-	}
+
 	
 }

@@ -16,6 +16,7 @@ import com.lw.entity.CheatEntity;
 import com.lw.entity.DealEntity;
 import com.lw.entity.ExchangeEntity;
 import com.lw.entity.OrderInfo;
+import com.lw.util.EmailSend;
 import com.lw.util.Type;
 
 public class AdminDao {
@@ -35,7 +36,9 @@ public class AdminDao {
 	
 	private final String GET_COAST = "select sum(money) from pay where time > ?";
 	
-	private final String GET_UNDEAL_PHONE = "select device_id,Id,money,number from pay where deal == 0 and type = ? and orderId is NULL";
+	private final String GET_UNDEAL_PHONE = "select device_id,Id,money,number from pay where deal = 0 and type = ? and orderId is NULL";
+	private final String UPDATA_PAY_STATUS = "update pay set deal = ?,orderId = ? where device_id = ? and Id = ?";
+	private final String GET_EXCHANGE  = "select money ,number,type from pay where device_id = ? and Id = ?";
 	
 	public List<ExchangeEntity> getUnPayExchange(){
 		Connection connection = DBUtil.getConn();
@@ -184,6 +187,8 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			DBUtil.close();
 		}
 	}
 	
@@ -208,6 +213,8 @@ public class AdminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			DBUtil.close();
 		}
 		return 0;
 	}
@@ -226,13 +233,61 @@ public class AdminDao {
 				ee.setPay_id(rs.getInt(2));
 				ee.setMoney(rs.getString(3));
 				ee.setNumber(rs.getString(4));
+				ee.setType(Type.TYPE_PHONE);
 				data.add(ee);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			DBUtil.close();
 		}
 		return data;
+	}
+	
+	public synchronized void updateDeal(int deviceId,int payid,String orderId,int result){
+		Connection con = DBUtil.getConn();
+		try {
+			PreparedStatement ps = con.prepareStatement(UPDATA_PAY_STATUS);
+			ps.setInt(1, result);
+			ps.setString(2, orderId);
+			ps.setInt(3, deviceId);
+			ps.setInt(4, payid);
+			int count = ps.executeUpdate();
+			if(count == 0)
+				EmailSend.sendEmail("Server Db result 0", "Updata the OrderId fail. orderId =" + orderId +",PayId = " + payid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			EmailSend.sendEmail("Server Db error", "Updata the OrderId fail. orderId =" + orderId +",PayId = " + payid);
+		}finally{
+			DBUtil.close();
+		}
+	}
+	
+	public synchronized ExchangeEntity getExchangeEntity(AdminRequest ar){
+		Connection con = DBUtil.getConn();
+		ExchangeEntity ee = new ExchangeEntity();
+		try {
+			PreparedStatement ps = con.prepareStatement(GET_EXCHANGE);
+			ps.setInt(1, ar.getDevice_id());
+			ps.setInt(2, ar.getPay_id());
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				ee.setDeviceId(ar.getDevice_id());
+				ee.setPay_id(ar.getPay_id());
+				ee.setMoney(rs.getString(1));
+				ee.setNumber(rs.getString(2));
+				ee.setType(rs.getInt(3));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DBUtil.close();
+		}
+		return ee;
 	}
 }
