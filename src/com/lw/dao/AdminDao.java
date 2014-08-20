@@ -16,11 +16,12 @@ import com.lw.entity.CheatEntity;
 import com.lw.entity.DealEntity;
 import com.lw.entity.ExchangeEntity;
 import com.lw.entity.OrderInfo;
+import com.lw.util.Type;
 
 public class AdminDao {
 
 	private  final String GETUNPAY = "select Id,device_id,spend_point,number,total_points,time,message " +
-			 " from pay where deal = 0" ;
+			 " from pay where deal != 1" ;
 	private  final String GETPAY = "select Id,device_id,spend_point,number,total_points,time,message from pay where device_id = ? or number = ?";
 	private  final String GET_DEALB_YDEVICE = "select pay_id,device_id,message,time,feedback from deal where device_id = ?";
 	private  final String GET_ORDERINFO = "select device_id,cid,message,point,time from points_order_info where device_id = ?";
@@ -33,6 +34,8 @@ public class AdminDao {
 	private final String INSERT_FEEDBACK = "insert into deal set time = now(),message = ?,device_id=?,pay_id=? ";
 	
 	private final String GET_COAST = "select sum(money) from pay where time > ?";
+	
+	private final String GET_UNDEAL_PHONE = "select device_id,Id,money,number from pay where deal == 0 and type = ? and orderId is NULL";
 	
 	public List<ExchangeEntity> getUnPayExchange(){
 		Connection connection = DBUtil.getConn();
@@ -207,5 +210,29 @@ public class AdminDao {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public List<ExchangeEntity> getUnDealPhone(){
+		Connection con = DBUtil.getConn();
+		List<ExchangeEntity> data = new ArrayList<ExchangeEntity>();
+		try {
+			PreparedStatement ps = con.prepareStatement(GET_UNDEAL_PHONE);
+			ps.setInt(1, Type.TYPE_PHONE);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				ExchangeEntity ee = new ExchangeEntity();
+				ee.setDeviceId(rs.getInt(1));
+				ee.setPay_id(rs.getInt(2));
+				ee.setMoney(rs.getString(3));
+				ee.setNumber(rs.getString(4));
+				data.add(ee);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
 	}
 }

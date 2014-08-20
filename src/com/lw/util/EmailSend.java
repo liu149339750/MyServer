@@ -16,6 +16,7 @@ public class EmailSend {
 
 	
 	public static void sendEmail(String title,String message){
+		try{
 		String from = "liu149339750@163.com";
 	    Properties props = new Properties();
 	    props.put("mail.smtp.host", "smtp.163.com");
@@ -39,5 +40,12 @@ public class EmailSend {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		sendEmail("title", "message");
 	}
 }

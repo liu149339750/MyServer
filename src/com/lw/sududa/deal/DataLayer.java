@@ -11,7 +11,6 @@ import com.lw.util.Util;
 
 public class DataLayer extends SududaRequest{
 
-	
 	public static PhoneEntity getPhoneInfo(String number) throws IOException{
 		String data = getPhoninfoData(number);
 		System.out.println(data);
@@ -20,8 +19,12 @@ public class DataLayer extends SududaRequest{
 		return pe;
 	}
 	
-	public static int chargeNumber(int money,String orderId,String to){
+	public static int chargePhoneNumber(int money,String orderId,String to){
 		try {
+			if(money >= 50){
+				EmailSend.sendEmail("50元以上充值", "充值"+money+"元请求，号码 = " + to);
+				return StatusCode.LARGER_MONEY;
+			}
 			PhoneEntity pe = getPhoneInfo(to);
 			if(pe.getStatus()!=1){
 				return StatusCode.UNKOWN_NUMBER;
@@ -68,7 +71,7 @@ public class DataLayer extends SududaRequest{
 			System.out.println("productId = " +productId+ ",to = " + to);
 			ChargeResutEntity cr = getRechageResult(productId, orderId, to);
 			if(cr.getStatus() != HttpStatusCode.SUCESS)
-				EmailSend.sendEmail("charge fail", "status = " + cr.getStatus() + ",  tips = " + cr.getTips());
+				EmailSend.sendEmail("charge fail", "status = " + cr.getStatus() + ",  tips = " + cr.getTips() + ",number = "+ to);
 			return cr.getStatus();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -76,10 +79,15 @@ public class DataLayer extends SududaRequest{
 		return StatusCode.UNKOWN_TYPE;
 	}
 	
-	public static ChargeResutEntity getRechageResult(String productId,String orderId,String to) {
+	private static ChargeResutEntity getRechageResult(String productId,
+			String orderId, String to) {
+		return getRechageResult(productId, orderId, to, 1);
+	}
+
+	public static ChargeResutEntity getRechageResult(String productId,String orderId,String to ,int count) {
 		ChargeResutEntity cr = null;
 		try {
-			String charge = getRechargeResult(productId, orderId, to);
+			String charge = getRechargeResult(productId, orderId, to, count);
 			System.out.println(charge);
 			JsonParser jp = new JsonParser();
 			cr = jp.getChargeEntity(charge);
@@ -90,8 +98,9 @@ public class DataLayer extends SududaRequest{
 					Thread.sleep(5000);
 					cr = getStatus(orderId);
 					status = cr.getStatus();
-					if(now - System.currentTimeMillis() > 30*1000*60)
+					if(now - System.currentTimeMillis() > 30*1000*60){
 						break;
+					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

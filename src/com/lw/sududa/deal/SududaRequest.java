@@ -71,7 +71,7 @@ public class SududaRequest {
 		return sb.toString();
 	}
 	
-	private static String getRehargeUrl(String productId,String orderId,String to){
+	private static String getRehargeUrl(String productId,String orderId,String to,int count){
 		long now = System.currentTimeMillis();
 		String time = (now + "").substring(0, (now + "").length() - 3);
 		HashMap<String, String>map = new HashMap<String, String>();
@@ -79,7 +79,7 @@ public class SududaRequest {
 		map.put("orderid", orderId);
 		map.put("productid", productId);
 		map.put("to", to);
-		map.put("count", "1");
+		map.put("count", count + "");
 		map.put("timestamp", time);
 		map.put("ver", VER);
 		
@@ -125,8 +125,8 @@ public class SududaRequest {
 		return result;
 	}
 	
-	protected static String getRechargeResult(String productId,String orderId,String to) throws MalformedURLException, UnsupportedEncodingException, IOException{
-		String link = getRehargeUrl(productId, orderId, to);
+	protected static String getRechargeResult(String productId,String orderId,String to, int count) throws MalformedURLException, UnsupportedEncodingException, IOException{
+		String link = getRehargeUrl(productId, orderId, to, count);
 		String result = getHttpResult(link);
 		return result;
 	}

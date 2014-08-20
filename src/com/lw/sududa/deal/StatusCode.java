@@ -8,7 +8,10 @@ public class StatusCode {
 	public static final int ERROR = -4;
 	public static final int UNKOWN_TYPE = -5;
 	public static final int UNSURPPORT  = -6;
+	public static final int LARGER_MONEY  = -7;
 	public static final int SUCESS       = 1;
+	
+	public static final int PROGRESSING = 2;
 	
 	
 	public static String getCodeString(int code){
@@ -32,6 +35,11 @@ public class StatusCode {
 		case UNSURPPORT:
 			result = "数据库找不到支持";
 			break;
+		case LARGER_MONEY:
+			result = "大额充值,等待处理";
+			break;
+		case PROGRESSING:
+			result = "已提交，但是一直显示处理中";
 		default:
 			result = HttpStatusCode.getStatusString(code);
 			break;

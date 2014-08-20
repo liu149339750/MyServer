@@ -16,7 +16,6 @@ import com.lw.util.Util;
 
 public class ExchangeServlet extends HttpServlet{
 	
-	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -33,5 +32,9 @@ public class ExchangeServlet extends HttpServlet{
 		boolean sucess = ed.addRecord(exchange);
 		System.out.println("ExchangeServlet sucess="+sucess);
 		resp.setHeader("result", sucess?"sucess":"fail");
+		
+		if(sucess){
+			
+		}
 	}
 }

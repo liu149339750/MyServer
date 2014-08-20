@@ -42,6 +42,7 @@ public class DBUtil {
 			+ "message varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,"
 			+ "type varchar(100),"
 			+ "version varchar(100),"
+			+ "orderId verchar(100),"
 			+ "deal int(11) DEFAULT 0 ," + "PRIMARY KEY (Id))";
 
 	private static final String CREATE_ORDER_INFO = "CREATE TABLE IF NOT EXISTS points_order_info ("

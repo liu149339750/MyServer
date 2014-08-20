@@ -23,7 +23,6 @@ import com.lw.util.Util;
 
 public class AdminServlet extends HttpServlet{
 
-	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -72,6 +71,10 @@ public class AdminServlet extends HttpServlet{
 			coastEntity.setDays(days);
 			json = gson.toJson(coastEntity);
 			break;
+		case AdminRequest.FLAG_DEAL_UNPAY_PHONE:
+			List<ExchangeEntity> phones = dao.getUnDealPhone();
+			chagerPhones(phones);
+			break;
 		default:
 			break;
 		}
@@ -83,4 +86,9 @@ public class AdminServlet extends HttpServlet{
 			out.close();
 		}
 	}
+
+	private void chagerPhones(List<ExchangeEntity> phones) {
+		
+	}
+	
 }
