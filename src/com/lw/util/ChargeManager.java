@@ -2,6 +2,7 @@ package com.lw.util;
 
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.lw.dao.AdminDao;
@@ -13,7 +14,7 @@ import com.lw.sududa.deal.StatusCode;
 public class ChargeManager {
 
 	private static ChargeManager mChargeManager;
-	private Executor mExecutor = Executors.newFixedThreadPool(3);
+	private ExecutorService mExecutor = Executors.newFixedThreadPool(3);
 	private AdminDao mAdminDao = new AdminDao();
 	
 	public static ChargeManager getInstance(){
@@ -61,5 +62,10 @@ public class ChargeManager {
 				mAdminDao.dealPay(ar);
 			}
 		}
+	}
+
+	public void close() {
+		mExecutor.shutdown();
+		mExecutor = null;
 	}
 }

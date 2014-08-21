@@ -19,6 +19,7 @@ import com.lw.entity.CoastEntity;
 import com.lw.entity.DealEntity;
 import com.lw.entity.ExchangeEntity;
 import com.lw.entity.OrderInfo;
+import com.lw.sududa.deal.StatusCode;
 import com.lw.util.ChargeManager;
 import com.lw.util.Util;
 
@@ -71,12 +72,16 @@ public class AdminServlet extends HttpServlet{
 			coastEntity.setDays(days);
 			json = gson.toJson(coastEntity);
 			break;
-		case AdminRequest.FLAG_DEAL_UNPAY_PHONE:
+		case AdminRequest.FLAG_CHARGE_UNPAY_PHONE:
 			List<ExchangeEntity> phones = dao.getUnDealPhone();
 			ChargeManager.getInstance().chargePhones(phones);
 			break;
 		case AdminRequest.FLAG_CHARGE_NUMBER:
 			ExchangeEntity ee = dao.getExchangeEntity(ar);
+			boolean b = dao.setChargeStatus(ar.getDevice_id(),ar.getPay_id(),StatusCode.PROGRESSING);
+			System.out.println("update status b = " + b);
+			if(!b)
+				return;
 			ChargeManager.getInstance().chargeNumber(ee);
 			break;
 		default:

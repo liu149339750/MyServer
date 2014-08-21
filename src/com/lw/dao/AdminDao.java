@@ -21,7 +21,7 @@ import com.lw.util.Type;
 
 public class AdminDao {
 
-	private  final String GETUNPAY = "select Id,device_id,spend_point,number,total_points,time,message " +
+	private  final String GETUNPAY = "select Id,device_id,spend_point,number,total_points,time,message,deal,type" +
 			 " from pay where deal != 1" ;
 	private  final String GETPAY = "select Id,device_id,spend_point,number,total_points,time,message from pay where device_id = ? or number = ?";
 	private  final String GET_DEALB_YDEVICE = "select pay_id,device_id,message,time,feedback from deal where device_id = ?";
@@ -55,6 +55,8 @@ public class AdminDao {
 				ee.setTotalPoints(rs.getInt(5));
 				ee.setTime(rs.getString(6));
 				ee.setMessage(rs.getString(7));
+				ee.setResult(rs.getInt(8));
+				ee.setType(rs.getInt(9));
 				data.add(ee);
 			}
 		} catch (SQLException e) {
@@ -289,5 +291,25 @@ public class AdminDao {
 			DBUtil.close();
 		}
 		return ee;
+	}
+
+	public boolean setChargeStatus(int deviceId, int payId, int deal) {
+		String sql = "update pay set deal = ? where device_id = ? and id = ?";
+		Connection con = DBUtil.getConn();
+		int c = 0;
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, deal);
+			ps.setInt(2, deviceId);
+			ps.setInt(3, payId);
+			c = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DBUtil.close();
+		}
+		return c > 0;
 	}
 }

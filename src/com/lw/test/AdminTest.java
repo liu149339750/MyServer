@@ -63,7 +63,7 @@ public class AdminTest {
 
 	private static void testDeal(AdminRequest ar, HttpURLConnection http)
 			throws IOException, UnsupportedEncodingException {
-		ar.setFlag(AdminRequest.FLAG_DEAL_UNPAY_PHONE);
+		ar.setFlag(AdminRequest.FLAG_CHARGE_UNPAY_PHONE);
 		OutputStream out = http.getOutputStream();
 		Gson gson = new Gson();
 		String json = gson.toJson(ar);
