@@ -9,8 +9,6 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.google.gson.Gson;

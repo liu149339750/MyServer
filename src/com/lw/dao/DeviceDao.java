@@ -14,7 +14,7 @@ public class DeviceDao {
 	
 	private Connection mConnection;
 	private String insert = "insert into device (uuid,imei,mac,android_id,model,device,first_login,last_login,ever_id,point) value (?,?,?,?,?,?,?,?,?,?)";
-	private String queryByMac = "select id from device where mac = ?";
+	private String queryByMacAndUUid = "select id from device where mac = ? and uuid = ?";
 	private String queryByUuIm = "select id from device where uuid = ? and imei = ?";
 	private String delete = "delete device where id = ?";
 	private String updataLastLogin = "update device set last_login = now(),point = ? where id = ?";
@@ -101,8 +101,9 @@ public class DeviceDao {
 		try{
 			mConnection = DBUtil.getConn();
 			if(!Util.isEmpty(mac) && !"00:00:00:00:00:00".equals(mac)){
-				PreparedStatement ps = mConnection.prepareStatement(queryByMac);
+				PreparedStatement ps = mConnection.prepareStatement(queryByMacAndUUid);
 				ps.setString(1, mac);
+				ps.setString(2, device.getUuid());
 				ResultSet rs = ps.executeQuery();
 //				if(rs.first()){
 //					id = rs.getInt(1);
@@ -113,7 +114,6 @@ public class DeviceDao {
 					id = rs.getInt(1);
 					return id;
 				}
-					
 			}
 			String uuid = device.getUuid();
 			String imei = device.getImei();
