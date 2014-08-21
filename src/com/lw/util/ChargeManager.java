@@ -43,7 +43,6 @@ public class ChargeManager {
 		public ChargeRunnable(ExchangeEntity ee){
 			mEntity = ee;
 		}
-		@Override
 		public void run() {
 			String orderId = (System.currentTimeMillis() + "").substring(4) + "v" + mEntity.getDeviceId() + "p" + mEntity.getPay_id();
 			int type = mEntity.getType();
