@@ -50,16 +50,24 @@ public class ChargeManager {
 			if(type == Type.TYPE_PHONE)
 				result = DataLayer.chargePhoneNumber(Integer.parseInt(mEntity.getMoney()), orderId, mEntity.getNumber());
 			else if(type == Type.TYPE_QQ){
-				
+				result = DataLayer.chargeQQ(Integer.parseInt(mEntity.getMoney()), orderId, mEntity.getNumber());
 			}
 			mAdminDao.updateDeal(mEntity.getDeviceId(), mEntity.getPay_id(), orderId, result);
 			if(result == StatusCode.SUCESS){
 				AdminRequest ar = new AdminRequest();
 				ar.setDevice_id(mEntity.getDeviceId());
 				ar.setPay_id(mEntity.getPay_id());
-				ar.setMessage("您的" + mEntity.getMoney() + "元话费请求已又系统自动处理，请注意查收");
+				ar.setMessage("您的" + mEntity.getMoney() + "元" + getString(type) +"请求已由系统自动处理，请注意查收");
 				mAdminDao.dealPay(ar);
 			}
+		}
+		private String getString(int type) {
+			String str = "";
+			if(type == Type.TYPE_PHONE)
+				str = "话费";
+			else if(type == Type.TYPE_QQ)
+				str = "Q币";
+			return str;
 		}
 	}
 

@@ -83,6 +83,17 @@ public class DataLayer extends SududaRequest{
 			String orderId, String to) {
 		return getRechageResult(productId, orderId, to, 1);
 	}
+	
+	public static int chargeQQ(int money,String orderId,String to){
+		if(money >= 50){
+			EmailSend.sendEmail("50元以上QQ充值", "充值"+money+"元请求，号码 = " + to);
+			return StatusCode.LARGER_MONEY;
+		}
+		ChargeResutEntity cr = getRechageResult("1", orderId, to, money);
+		if(cr.getStatus() != HttpStatusCode.SUCESS)
+			EmailSend.sendEmail("charge fail", "status = " + cr.getStatus() + ",  tips = " + cr.getTips() + ",number = "+ to);
+		return cr.getStatus();
+	}
 
 	public static ChargeResutEntity getRechageResult(String productId,String orderId,String to ,int count) {
 		ChargeResutEntity cr = null;
