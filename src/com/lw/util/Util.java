@@ -1,11 +1,16 @@
 package com.lw.util;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+
+import javax.servlet.ServletContext;
 
 public class Util {
 	
@@ -38,5 +43,22 @@ public class Util {
 			message = message + "\n" + st[i];
 		}
 		EmailSend.sendEmail(title, message);
+	}
+	
+	public static boolean auto(ServletContext servletContext){
+		Properties p = new Properties();
+		try {
+			
+			InputStream input = servletContext.getResourceAsStream("config.txt");
+			p.load(input);
+			String r = p.getProperty("auto");
+			input.close();
+			return "true".equals(r);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

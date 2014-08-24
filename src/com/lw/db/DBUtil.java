@@ -58,6 +58,14 @@ public class DBUtil {
 			+ "totalPoint int(11) DEFAULT 0,"
 			+ "PRIMARY KEY (Id)) ";
 	
+	private static final String CREATE_PHONE_INFO = "create table if NOT EXISTS phone (" +
+			"Id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+			"pay_id int(11) default 0," +
+			"type varchar(50)," +
+			"city varchar(50)," +
+			"areacode varchar(50)," +
+			"zipcode varchar(50)) CHARSET=utf8";
+	
 	private static final String CREATE_RECOMMAND = "CREATE TABLE IF NOT EXISTS recommand ("
 		+ "Id int(11) NOT NULL primary key AUTO_INCREMENT,"
 		+ "device_id int(11) DEFAULT NULL,"
@@ -67,7 +75,7 @@ public class DBUtil {
 		+ "device varchar(100))"; //the model and os version
 	
 
-	static {
+/*	static {
 		Connection con = getLocalConn();
 		try {
 			Statement statement = con.createStatement();
@@ -77,11 +85,12 @@ public class DBUtil {
 			con.prepareStatement(CREATE_PAY).executeUpdate();
 			con.prepareStatement(CREATE_ORDER_INFO).execute();
 			con.prepareStatement(CREATE_RECOMMAND).execute();
+			con.prepareStatement(CREATE_PHONE_INFO).execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public static Connection getConn() {
 		Connection conn = td.get();
@@ -108,16 +117,16 @@ public class DBUtil {
 	private static Connection getLocalConn() {
 		Connection con = null;
 		try {
+			
 			Class.forName("org.mariadb.jdbc.Driver");
 			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/zuanqianbao?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
-			 
 //			 con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 //			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/liuwei?user=root&password=coco5200&useUnicode=true&characterEncoding=utf8");
 //			 con =DriverManager.getConnection("jdbc:mariadb://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
 			// DriverManager.getConnection("jdbc:mysql://localhost:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 			// con =
-			// DriverManager.getConnection("jdbc:mysql://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
+//			 DriverManager.getConnection("jdbc:mysql://sunsonfly.synology.me:3306/liuwei?user=liuwei&password=coco5200&useUnicode=true&characterEncoding=utf8");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

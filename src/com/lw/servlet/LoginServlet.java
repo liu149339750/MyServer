@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		ServletInputStream in = req.getInputStream();
+		ServletInputStream in = req.getInputStream(); 
 		String json = Util.readStream(in);
 		Gson gson = new Gson();
 		Device device = gson.fromJson(json, Device.class);

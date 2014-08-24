@@ -15,6 +15,7 @@ public class DeviceDao {
 	private Connection mConnection;
 	private String insert = "insert into device (uuid,imei,mac,android_id,model,device,first_login,last_login,ever_id,point) value (?,?,?,?,?,?,?,?,?,?)";
 	private String queryByMacAndUUid = "select id from device where mac = ? and uuid = ?";
+	private String queryByMac = "select id from device where mac = ?";
 	private String queryByUuIm = "select id from device where uuid = ? and imei = ?";
 	private String delete = "delete device where id = ?";
 	private String updataLastLogin = "update device set last_login = now(),point = ? where id = ?";
@@ -110,6 +111,13 @@ public class DeviceDao {
 //					if(!rs.next())
 //						return id;
 //				}
+				if(rs.last()){
+					id = rs.getInt(1);
+					return id;
+				}
+				ps = mConnection.prepareStatement(queryByMac);
+				ps.setString(1, mac);
+				rs = ps.executeQuery();
 				if(rs.last()){
 					id = rs.getInt(1);
 					return id;

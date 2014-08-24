@@ -29,7 +29,8 @@ public class AdminTest {
 	public static void main(String[] args) throws IOException {
 		AdminRequest ar = new AdminRequest();
 //		URL url  = new URL("http://sunsonfly.synology.me:7070/zuanqian/admin");
-		URL url  = new URL("http://localhost:8080/MyServer/admin");
+		URL url  = new URL("http://sunsonfly.synology.me:7070/MyServer/admin");
+//		URL url  = new URL("http://localhost:8080/MyServer/admin");
 		HttpURLConnection http =  (HttpURLConnection) url.openConnection();
 		http.setDoOutput(true);
 //		testOrderInfo(ar,http);
@@ -41,7 +42,7 @@ public class AdminTest {
 		
 //		testCoastQuery(ar, http);
 //		testDeal(ar, http);
-		testChargeNumber(ar, http);
+//		testChargeNumber(ar, http);
 	}
 
 	private static void testChargeNumber(AdminRequest ar, HttpURLConnection http)
@@ -70,20 +71,6 @@ public class AdminTest {
 		http.getResponseCode();
 		System.out.println(json);
 		System.out.println("send over");
-	}
-
-	private static void testCoastQuery(AdminRequest ar, HttpURLConnection http)
-			throws IOException, UnsupportedEncodingException {
-		ar.setFlag(AdminRequest.FLAG_QUERY_COSAT);
-		http.setRequestProperty("days", "0");
-		OutputStream out = http.getOutputStream();
-		Gson gson = new Gson();
-		String json = gson.toJson(ar);
-		out.write(json.getBytes("utf-8"));
-		out.close();
-		InputStream in = http.getInputStream();
-		CoastEntity data = gson.fromJson(new InputStreamReader(in,"utf-8"), CoastEntity.class);
-		System.out.println(data.getMoney());
 	}
 
 	private static void testCheat(AdminRequest ar, HttpURLConnection http)

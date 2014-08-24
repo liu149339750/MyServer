@@ -39,7 +39,7 @@ public class StatusCode {
 			result = "大额充值,等待处理";
 			break;
 		case PROGRESSING:
-			result = "已提交，但是一直显示处理中";
+			result = "已提交,处理中";
 		default:
 			result = HttpStatusCode.getStatusString(code);
 			break;

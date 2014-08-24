@@ -40,7 +40,7 @@ public class AdminServlet extends HttpServlet{
 		String json  = null;
 		switch (ar.getFlag()) {
 		case AdminRequest.FLAG_QUERY_IS_CHEAT:
-			CheatEntity ce = dao.getCheatEntity(ar);
+			CheatEntity ce = dao.getCheatEntity(ar.getDevice_id());
 			json = gson.toJson(ce);
 			break;
 		case AdminRequest.FLAG_QUERY_DEAL_BY_DEVICE:

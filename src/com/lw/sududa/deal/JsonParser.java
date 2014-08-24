@@ -25,6 +25,10 @@ public class JsonParser {
 							pe.setCity(reader.nextString());
 						} else if (name.equals("status")) {
 							pe.setStatus(reader.nextInt());
+						}else if(name.equals("areacode")){
+							pe.setAreacode(reader.nextString());
+						} else if(name.equals("zipcode")){
+							pe.setZipcode(reader.nextString());
 						} else
 							reader.skipValue();
 					}

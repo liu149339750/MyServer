@@ -8,6 +8,28 @@ public class PayEntity {
 	private String time;
 	private int deal;
 	private String version;
+	private int type;
+	private String kind;
+	private String city;
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
 	public int getMoney() {
 		return money;
 	}

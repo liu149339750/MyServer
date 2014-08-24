@@ -16,6 +16,7 @@ import com.lw.entity.CheatEntity;
 import com.lw.entity.DealEntity;
 import com.lw.entity.ExchangeEntity;
 import com.lw.entity.OrderInfo;
+import com.lw.sududa.entity.PhoneEntity;
 import com.lw.util.EmailSend;
 import com.lw.util.Type;
 
@@ -39,6 +40,8 @@ public class AdminDao {
 	private final String GET_UNDEAL_PHONE = "select device_id,Id,money,number from pay where deal = 0 and type = ? and orderId is NULL";
 	private final String UPDATA_PAY_STATUS = "update pay set deal = ?,orderId = ? where device_id = ? and Id = ?";
 	private final String GET_EXCHANGE  = "select money ,number,type from pay where device_id = ? and Id = ?";
+	
+	private final String GET_CHARGECOUNT = "SELECT count(*) from pay where time > ? and device_id = ?";
 	
 	public List<ExchangeEntity> getUnPayExchange(){
 		Connection connection = DBUtil.getConn();
@@ -142,24 +145,24 @@ public class AdminDao {
 		return data;
 	}
 	
-	public CheatEntity getCheatEntity(AdminRequest ar){
+	public CheatEntity getCheatEntity(int deviceId){
 		Connection con = DBUtil.getConn();
 		CheatEntity ce = new CheatEntity();
 		try {
 			PreparedStatement ps = con.prepareStatement(GET_APP_POINTS);
-			ps.setInt(1, ar.getDevice_id());
+			ps.setInt(1, deviceId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next())
 				ce.setEarnPoint(rs.getInt(1));
 			
 			ps = con.prepareStatement(GET_SPEND_POINTS);
-			ps.setInt(1, ar.getDevice_id());
+			ps.setInt(1, deviceId);
 			rs = ps.executeQuery();
 			if(rs.next())
 				ce.setSpendPoint(rs.getInt(1));
 			
 			ps = con.prepareStatement(GET_TOTAL_POINTS);
-			ps.setInt(1, ar.getDevice_id());
+			ps.setInt(1, deviceId);
 			rs = ps.executeQuery();
 			if(rs.next())
 				ce.setTotalPoint(rs.getInt(1));
@@ -311,5 +314,45 @@ public class AdminDao {
 			DBUtil.close();
 		}
 		return c > 0;
+	}
+	
+	public int getChargeTodayCount(int deviceId){
+		Connection con = DBUtil.getConn();
+		int c = 0;
+		try {
+			PreparedStatement ps = con.prepareStatement(GET_CHARGECOUNT);
+			Date date = new Date(System.currentTimeMillis());
+			ps.setDate(1, date);
+			ps.setInt(2, deviceId);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				c = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DBUtil.close();
+		}
+		return c;
+	}
+	
+	public void insertPhoneInfo(int payId,PhoneEntity pe){
+		String sql = "insert into phone set pay_id = ?,type = ?, city = ?,areacode=?,zipcode=?";
+		Connection con = DBUtil.getConn();
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, payId);
+			ps.setString(2, pe.getType());
+			ps.setString(3, pe.getCity());
+			ps.setString(4, pe.getAreacode());
+			ps.setString(5, pe.getZipcode());
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DBUtil.close();
+		}
 	}
 }

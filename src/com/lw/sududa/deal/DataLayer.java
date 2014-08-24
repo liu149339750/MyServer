@@ -58,6 +58,8 @@ public class DataLayer extends SududaRequest{
 					productId = "3301";
 				}else if(money == 5){
 					productId = "3401";
+				}else if(money == 10){
+					productId = "1582";
 				}else {
 					String city = pe.getCity();
 					String like = city.trim().substring(0, 2);

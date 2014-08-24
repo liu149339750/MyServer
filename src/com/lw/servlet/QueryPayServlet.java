@@ -26,11 +26,12 @@ import com.lw.util.Util;
 
 public class QueryPayServlet extends HttpServlet{
 	private static final String GET_MY_EXCHANGE = "select money,number,time,deal,version from pay where device_id = ?";
-	private static final String GET_TODAY_PAYS = "select money,number,time,deal,version,device_id from pay where time > ?";
+//	private static final String GET_TODAY_PAYS = "select money,number,time,deal,version,device_id,pay.type,phone.city,phone.type from pay where time > ?";
+	private static final String GET_TODAY_PAYS = "select money,number,time,deal,version,device_id,pay.type,phone.city,phone.type from pay left join phone on pay.id = phone.pay_id where pay.time > ? order by time desc";
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+		System.out.println("QueryPayServlet");
 		InputStream in = req.getInputStream();
 		Gson gson = new Gson();
 		QueryPayEntity payEntity = gson.fromJson(new InputStreamReader(in), QueryPayEntity.class);
@@ -61,6 +62,7 @@ public class QueryPayServlet extends HttpServlet{
 			out.flush();
 			out.close();
 		}
+		
 	}
 	
 	private List<PayEntity> getTodayPays(){
@@ -84,6 +86,9 @@ public class QueryPayServlet extends HttpServlet{
 				entity.setDeal(rs.getInt(4));
 				entity.setVersion(rs.getString(5));
 				entity.setDeviceId(rs.getInt(6));
+				entity.setType(rs.getInt(7));
+				entity.setCity(rs.getString(8));
+				entity.setKind(rs.getString(9));
 				result.add(entity);
 			}
 		} catch (SQLException e) {

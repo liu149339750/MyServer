@@ -1,7 +1,7 @@
 package com.lw.util;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,6 +10,7 @@ import com.lw.entity.AdminRequest;
 import com.lw.entity.ExchangeEntity;
 import com.lw.sududa.deal.DataLayer;
 import com.lw.sududa.deal.StatusCode;
+import com.lw.sududa.entity.PhoneEntity;
 
 public class ChargeManager {
 
@@ -21,6 +22,22 @@ public class ChargeManager {
 		if(mChargeManager == null)
 			mChargeManager = new ChargeManager();
 		return mChargeManager;
+	}
+	
+	public void insertPhoneInfo(final int payId,final String number){
+		mExecutor.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					PhoneEntity pe = DataLayer.getPhoneInfo(number);
+					AdminDao ad = new AdminDao();
+					ad.insertPhoneInfo(payId, pe);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public void chargePhones(List<ExchangeEntity> phones) {
@@ -74,5 +91,6 @@ public class ChargeManager {
 	public void close() {
 		mExecutor.shutdown();
 		mExecutor = null;
+		mChargeManager = null;
 	}
 }
