@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet{
 			String host = req.getRemoteAddr();
 			int rid = DataLifeManager.getInstance().isRecommand(host);
 			System.out.println("rid = " + rid);
-			if(rid != -1 && !Util.isEmpty(device.getImei())){
+			if(rid != -1 && !Util.isEmpty(device.getImei()) && !Util.isEmpty(device.getMac())){
 				RecommandDao rd = new RecommandDao();
 				rd.addRelation(device.getDevice(), rid, resultId);
 			}
@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet{
 //			dd.updataFirstLogin(id);
 //			resultId = id;
 			resultId = dd.addDevice(device, id);
-//			updataRecommand(id,resultId); //修改推荐关系
+			updataRecommand(id,resultId); //修改推荐关系
 		}else if (cid != id){   //数据被串改或者数据库出问题
 			System.out.println("error!数据被串改或者数据库出问题 ,cid = " + cid + ",id = " + id +"\n"+device);
 			if(id == 0)

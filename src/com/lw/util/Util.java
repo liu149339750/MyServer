@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -34,6 +35,11 @@ public class Util {
 			sb.append(temp);
 		}
 		return sb.toString();
+	}
+	
+	public static float getFloat(float v){
+        DecimalFormat df = new DecimalFormat("0.0");
+		return Float.parseFloat(df.format(v));
 	}
 	
 	public static void sendErrorEmail(Exception e,String title){

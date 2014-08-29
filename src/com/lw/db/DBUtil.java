@@ -70,7 +70,7 @@ public class DBUtil {
 		+ "Id int(11) NOT NULL primary key AUTO_INCREMENT,"
 		+ "device_id int(11) DEFAULT NULL,"
 		+ "recommand_id int(11)," 
-		+ "point int(11) default 0,"
+		+ "point float(6,1) default 0.0,"
 		+ "time datetime ,"
 		+ "device varchar(100))"; //the model and os version
 	
@@ -109,9 +109,7 @@ public class DBUtil {
 			}
 			return conn;
 		}
-
 		return conn;
-
 	}
 
 	private static Connection getLocalConn() {
@@ -145,7 +143,6 @@ public class DBUtil {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 }

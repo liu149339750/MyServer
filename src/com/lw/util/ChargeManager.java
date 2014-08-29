@@ -27,7 +27,6 @@ public class ChargeManager {
 	public void insertPhoneInfo(final int payId,final String number){
 		mExecutor.execute(new Runnable() {
 			
-			@Override
 			public void run() {
 				try {
 					PhoneEntity pe = DataLayer.getPhoneInfo(number);

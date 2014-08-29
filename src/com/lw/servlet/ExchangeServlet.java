@@ -14,6 +14,7 @@ import com.lw.dao.AdminDao;
 import com.lw.dao.ExchangeDao;
 import com.lw.entity.CheatEntity;
 import com.lw.entity.ExchangeEntity;
+import com.lw.sududa.deal.StatusCode;
 import com.lw.util.ChargeManager;
 import com.lw.util.EmailSend;
 import com.lw.util.Type;
@@ -61,6 +62,7 @@ public class ExchangeServlet extends HttpServlet {
 				}
 				try {
 					if (Util.auto(getServletContext())) {
+						adminDao.setChargeStatus(exchange.getDeviceId(),id,StatusCode.PROGRESSING);
 						ChargeManager.getInstance().chargeNumber(exchange);
 					}
 				} catch (Exception e) {

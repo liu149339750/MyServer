@@ -10,6 +10,7 @@ import java.util.List;
 import com.lw.db.DBUtil;
 import com.lw.entity.OrderInfo;
 import com.lw.entity.OrderRespon;
+import com.lw.util.Util;
 
 public class OrderDao {
 	private Connection mConnection;
@@ -17,12 +18,16 @@ public class OrderDao {
 			 "select ?,?,?,?,?,?,?,?,now() from dual where not exists (select * from points_order_info where cid = ? and device_id = ? and message = ?)";
 
 	private static final String SELECT = "select Id  from points_order_info where device_id = ? and cid = ? and message = ?";
+	
+	private static final String COUNT_RECOMMAND = "update recommand set point = point + ? where recommand_id = ?";
 	public List<OrderRespon> addOrderInfo(List<OrderInfo> list){
 		List<OrderRespon> results = new ArrayList<OrderRespon>();
 		try{
 			mConnection = DBUtil.getConn();
+			float count = 0;
 			for(int i=0;i<list.size();i++){
 				OrderInfo order = list.get(i);
+				System.out.println("cid = " + order.getId());
 				PreparedStatement ps = mConnection.prepareStatement(insert);
 				ps.setInt(1, order.getDeviceId());
 				ps.setString(2, order.getOrderId() + "");
@@ -35,8 +40,10 @@ public class OrderDao {
 				ps.setInt(9, order.getId());
 				ps.setInt(10, order.getDeviceId());
 				ps.setString(11, order.getMessage());
-				ps.execute();
-				
+				int c = ps.executeUpdate();
+				if(c == 1){
+					count = count + order.getPoint();
+				}
 				if (order.getId() != 0) {
 					ps = mConnection.prepareStatement(SELECT);
 					ps.setInt(1, order.getDeviceId());
@@ -51,6 +58,13 @@ public class OrderDao {
 					or.setSid(id);
 					results.add(or);
 				}
+			}
+			if(count > 0){
+				int deviceId = list.get(0).getDeviceId();
+				PreparedStatement ps = mConnection.prepareStatement(COUNT_RECOMMAND);
+				ps.setFloat(1, Util.getFloat(count/10));
+				ps.setInt(2, deviceId);
+				ps.executeUpdate();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

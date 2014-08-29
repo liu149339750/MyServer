@@ -24,11 +24,12 @@ public class OrderTest {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		OrderInfo order = new OrderInfo();
-		order.setDeviceId(12);
+		order.setDeviceId(89);
 		order.setMessage("my name is liuwei");
-		order.setOrderId(32);
-		order.setPoint(342);
+		order.setOrderId(1);
+		order.setPoint(44);
 		order.setStatus(1);
+		order.setId(3);
 		order.setTime(System.currentTimeMillis());
 		Gson gson = new Gson();
 		List<OrderInfo>list = new ArrayList<OrderInfo>();

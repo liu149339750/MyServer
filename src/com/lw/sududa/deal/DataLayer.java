@@ -72,7 +72,9 @@ public class DataLayer extends SududaRequest{
 				return StatusCode.UNSURPPORT;
 			System.out.println("productId = " +productId+ ",to = " + to);
 			ChargeResutEntity cr = getRechageResult(productId, orderId, to);
-			if(cr.getStatus() != HttpStatusCode.SUCESS)
+			if(cr.getStatus() == -1){
+				EmailSend.sendEmail("get status fail!", "status = " + cr.getStatus() + ",  tips = " + cr.getTips() + ",number = "+ to + ",do not charge again!");
+			}else if(cr.getStatus() != HttpStatusCode.SUCESS)
 				EmailSend.sendEmail("charge fail", "status = " + cr.getStatus() + ",  tips = " + cr.getTips() + ",number = "+ to);
 			return cr.getStatus();
 		} catch (IOException e) {
@@ -121,7 +123,7 @@ public class DataLayer extends SududaRequest{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Util.sendErrorEmail(e, "charge meet eorr,please check");
+			Util.sendErrorEmail(e, "after charge, we check status but meet a eorr,please check");
 		} 
 		return cr;
 	}

@@ -22,7 +22,7 @@ public class SududaUtil {
 	public static String getRequestURL(String path, Map<String, String> para, String key) throws UnsupportedEncodingException
 	{
 
-		String url = "http://www.chongzhi.com";// 该参数必须按实际请求路径修改
+		String url = "http://api.sududa.com";// 该参数必须按实际请求路径修改
 		String param = "";
 		String signType = "";
 		if (path.indexOf("/") != 0)

@@ -87,7 +87,7 @@ public class AdminServlet extends HttpServlet{
 		default:
 			break;
 		}
-		System.out.println("admin deal! json = " + json);
+//		System.out.println("admin deal! json = " + json);
 		if(!Util.isEmpty(json)){
 			OutputStream out = resp.getOutputStream();
 			out.write(json.getBytes("utf-8"));
